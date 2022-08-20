@@ -1,8 +1,8 @@
 import { Pool, PoolClient } from "pg";
 
-export type TransactionHandler = (client: PoolClient) => Promise<Object | Object[]>;
+export type TransactionHandler = (client: PoolClient) => Promise<any>;
 
-const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
+const DB_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/indie-campers"
 
 let connector: Pool;
 

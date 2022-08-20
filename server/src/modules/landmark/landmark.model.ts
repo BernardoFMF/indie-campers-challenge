@@ -4,4 +4,5 @@ export type Landmark = {
     description_: string,
     longitude_: number,
     latitude_: number,
+    distance_: number | null
 }

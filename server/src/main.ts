@@ -4,6 +4,8 @@ import { CORS_ORIGIN } from "./constants";
 import helmet from "helmet";
 import { connectToDatabase, disconnectFromDatabase } from "./utils/database.config";
 import errorHandler from "./middlewares/error.middleware";
+import route from "./modules/route/route.route";
+import landmark from "./modules/landmark/landmark.route";
 
 const PORT = process.env.PORT || 4000;
 
@@ -23,7 +25,8 @@ app.use(
 app.use(helmet());
 
 // Routes
-
+app.use("/api/routes", route);
+app.use("/api/landmarks", landmark);
 
 app.use(errorHandler);
 
