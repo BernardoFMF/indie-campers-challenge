@@ -10,7 +10,7 @@
 
 3. Create a database on PostgreSQL.
 
-4. Run the scripts present on the [sql_scripts]() directory in the following order:
+4. Run the scripts present on the [sql_scripts](https://github.com/BernardoFMF/indie-campers-challenge/tree/main/docs/sql_scripts) directory in the following order:
 
     1. **create.sql**
     2. **functions.sql**
