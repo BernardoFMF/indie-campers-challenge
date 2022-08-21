@@ -6,29 +6,3 @@ insert into landmark_(name_, description_, longitude_, latitude_)
 	
 insert into route_landmark_ (route_id_, landmark_id_, highlight_)
 	values (1, 1, true), (1, 2, false);
-	
-
-
-select * from route_;
-
-select * from landmark_;
-
-select * from route_landmark_;
-
-select * 
-from route_landmark_ rl join landmark_ l on rl.landmark_id_ = l.id_
-where rl.route_id_ = any(array[1]);
-
-select l.name_, calculate_distance(53.31861111111111, -1.6997222222222223, l.latitude_, l.longitude_) as distance
-from landmark_ l
-order by calculate_distance(53.31861111111111, -1.6997222222222223, l.latitude_, l.longitude_)
-limit 1;
-
-select r.id_, r.name_, r.description_, l.id_ as landmark_id_, l.name_ 
-from Route_ r left join Route_Landmark_ rl on r.id_ = rl.route_id_ left join Landmark_ l on rl.landmark_id_ = l.id_
-where rl.route_id_ = 2 and rl.highlight_ = true;
-
-select r.id_, l.id_ as landmark_id_, l.name_ 
-from Route_ r left outer join Route_Landmark_ rl on r.id_ = rl.route_id_ left outer join Landmark_ l on rl.landmark_id_ = l.id_;
-
-select r.id_, l.id_, l.name_ from Route_ r join Route_Landmark_ rl on r.id_ = rl.route_id_ join Landmark_ l on rl.landmark_id_ = l.id_ where rl.highlight_ = true;

@@ -35,9 +35,9 @@ export async function findRoutesByLocation(start_location_: Route["start_locatio
     }, [])
 
     const formattedRoutes = {
-        start_location: start_location_,
-        end_location: end_location_,
-        routes: rows
+        start_location_,
+        end_location_,
+        routes_: rows
     }
 
     return formattedRoutes;
