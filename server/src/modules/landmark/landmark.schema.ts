@@ -19,4 +19,4 @@ export const fetchLandmarkByGeoSchema = object({
   })
 });
 
-export type fetchLandmarkByGeoQuery = TypeOf<typeof fetchLandmarkByGeoSchema>;
+export type FetchLandmarkByGeoQuery = TypeOf<typeof fetchLandmarkByGeoSchema>["query"];

@@ -3,6 +3,9 @@ import { AnyZodObject } from "zod";
 
 const validate = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log(req.query);
+        console.log(req.params);
+        
         let parsedAndValidated = await schema.parseAsync({
             body: req.body,
             query: req.query,
@@ -14,6 +17,9 @@ const validate = (schema: AnyZodObject) => async (req: Request, res: Response, n
         if (parsedAndValidated.body) req.body = parsedAndValidated.body
         if (parsedAndValidated.query) req.query = parsedAndValidated.query
         if (parsedAndValidated.params) req.params = parsedAndValidated.params
+
+        console.log(req.query);
+        console.log(req.params);
         
         return next();
     } catch (error) {        

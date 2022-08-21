@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validate from "../../middlewares/validator.middleware";
-import { fetchRoutesSchema } from "./route.schema";
-import { fetchRoutes } from "./route.controller";
+import { fetchRoutesSchema, fetchRouteByIdSchema } from "./route.schema";
+import { fetchRoutes, fetchRouteById } from "./route.controller";
 
 const router = Router();
 
@@ -11,13 +11,8 @@ const router = Router();
 router.get("/", validate(fetchRoutesSchema), fetchRoutes);
 
 /**
- * Helper endpoints to add routes, add landmarks to routes and change whether or not a landmark is a highlight in a route 
+ * Main functionality -> fetch specific route
  */
-
-//router.post("/", validate(fetchRoutesSchema), fetchRoutes);
-
-//router.post("/:id/landmarks", validate(fetchRoutesSchema), fetchRoutes);
-
-//router.patch("/:id", validate(fetchRoutesSchema), fetchRoutes);
+ router.get("/:id", validate(fetchRouteByIdSchema), fetchRouteById);
 
 export default router;
