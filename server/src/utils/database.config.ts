@@ -1,8 +1,10 @@
+import { StatusCodes } from "http-status-codes";
 import { Pool, PoolClient } from "pg";
+import { StatusError } from "../middlewares/error.middleware";
 
 export type TransactionHandler = (client: PoolClient) => Promise<any>;
 
-const DB_CONNECTION_STRING = "postgres://postgres:postgres@localhost:5432/indie-campers"
+const DB_CONNECTION_STRING = process.env.INDIE_DB_CONNECTION_STRING
 
 let connector: Pool;
 
@@ -12,9 +14,8 @@ export async function connectToDatabase() {
         connector = new Pool({
             connectionString: DB_CONNECTION_STRING
         })
-        console.log("CONNECTOR -> " + connector)
     } catch (e) {
-        console.log("ERROR -> " + e)
+        process.exit(1);
     }
 }
 
@@ -32,7 +33,7 @@ export async function executeQuery(transactionHandler: TransactionHandler, needs
         return result;
     } catch(e) {
         await client.query('Rollback');
-        throw e;
+        throw new StatusError(StatusCodes.INTERNAL_SERVER_ERROR, "Internal server error");
     } finally {
         client.release();
     }

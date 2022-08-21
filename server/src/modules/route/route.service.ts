@@ -47,10 +47,10 @@ export async function findRouteById(id_: Route["id_"]) {
     const handler: TransactionHandler = async (client) => {
         const queryRoute = "select r.id_, r.name_, r.description_ " + 
         "from Route_ r " + 
-        "where r.id_ = $1;"
+        "where r.id_ = $1;";
         const queryLandmarks = "select l.id_, l.name_, l.description_, rl.highlight_ " + 
         "from Route_Landmark_ rl join Landmark_ l on rl.landmark_id_ = l.id_ " + 
-        "where rl.route_id_ = $1;"
+        "where rl.route_id_ = $1;";
 
         const routeResult = await client.query(queryRoute, [id_]);
         const landmarksResult = await client.query(queryLandmarks, [id_]);

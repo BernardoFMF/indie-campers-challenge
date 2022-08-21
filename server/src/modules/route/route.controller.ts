@@ -1,22 +1,23 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
+import { StatusError } from "../../middlewares/error.middleware";
 import { FetchRoutesQuery } from "./route.schema";
 import { findRoutesByLocation, findRouteById } from "./route.service";
 
-export async function fetchRoutes(req: Request<{}, FetchRoutesQuery, {}>, res: Response) {
+export async function fetchRoutes(req: Request<{}, FetchRoutesQuery, {}>, res: Response, next: NextFunction) {
     const { start_location, end_location } = req.query
 
     const routes = await findRoutesByLocation(String(start_location), String(end_location));
 
-    return res.status(StatusCodes.OK).json(routes);
+    res.status(StatusCodes.OK).json(routes);
 }
 
-export async function fetchRouteById(req: Request, res: Response) {
+export async function fetchRouteById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
     const route = await findRouteById(Number(id));
 
-    if (!route) return res.status(StatusCodes.NOT_FOUND).json({ message: "Route not found" });
+    if (!route) throw new StatusError(StatusCodes.NOT_FOUND, "Route not found");
 
-    return res.status(StatusCodes.OK).json(route);
+    res.status(StatusCodes.OK).json(route);
 }

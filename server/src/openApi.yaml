@@ -1,0 +1,226 @@
+openapi: 3.0.0
+info:
+  description: API documentation referring to the indie campers technical assessment
+  version: "1.0.0"
+  title: Indie Campers Technical Assessment
+  contact:
+    email: bernardo_fragoso91@hotmail.com
+    name: Bernardo Fragoso
+tags:
+  - name: Routes
+    description: Endpoints correspondent to the entity Route
+  - name: Landmarks
+    description: Endpoints correspondent to the entity Landmark
+paths:
+  /api/routes/search:
+    get:
+      tags:
+        - Routes
+      summary: fetches the routes that have the same start and endpoint that was sent by the caller
+      operationId: fetchRoutes
+      description: |
+        By passing in the start_location and end_location in the request query parameters, you can search for
+        routes that correspond to that criteria, observing also the route highlight landmarks.
+      parameters:
+        - in: query
+          name: start_location
+          description: pass the location in which the route will start at
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: end_location
+          description: pass the location in which the route will end at
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: search results matching the criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/route_list'
+        '400':
+          description: query parameter is missing, returns a zod custom error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zod_error'
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /api/routes/{id}:
+    get:
+      tags:
+        - Routes
+      summary: fetches the routes that have the same start and endpoint that was sent by the caller
+      operationId: fetchRouteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+      description: |
+        By passing in the id in the path parameter, you will get an object that represents that route, also having its landmarks
+      responses:
+        '200':
+          description: search results matching the criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/route'
+        '400':
+          description: query parameter is invalid, returns a zod custom error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zod_error'
+        '404':
+          description: resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'          
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /api/landmarks/geo:
+    get:
+      tags:
+        - Landmarks
+      summary: fetches the closest landmark given a geographic point (latitude and longitude) and also returns the distance in Km
+      operationId: fetchClosestLandmark
+      parameters:
+        - in: query
+          name: latitude
+          description: pass the latitude to find the closest landmark
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: longitude
+          description: pass the longitude to find the closest landmark
+          required: true
+          schema:
+            type: string
+      description: |
+        By passing in the latitude and longitude in the query parameters, you will get an object that represents the closest landmark along with the distance in Km
+      responses:
+        '200':
+          description: landmark closest to the point given
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/landmark'
+        '400':
+          description: query parameter is invalid, returns a zod custom error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zod_error'         
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  schemas:
+    route_list:
+      type: object
+      properties:
+        start_location_:
+          type: string
+        end_location_:
+          type: string
+        routes_:
+          type: array
+          items:
+            type: object
+            properties:
+              id_:
+                type: integer
+              name_:
+                type: string
+              description_:
+                type: string
+              highlights:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id_
+                    - name_
+                  properties:
+                    id_:
+                      type: integer
+                    name_:
+                      type: string
+    route:
+      type: object
+      properties:
+        id_:
+          type: integer
+        name_:
+          type: string
+        description:
+          type: string
+        landmarks:
+          type: array
+          items:
+            type: object
+            properties:
+              id_:
+                type: integer
+              name_:
+                type: string
+              description_:
+                type: string
+              highlight_:
+                type: boolean
+    landmark:
+      type: object
+      properties:
+        id_:
+          type: integer
+        name_:
+          type: string
+        distance_:
+          type: number
+    zod_error:
+      type: object
+      properties:
+        issues:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              expected:
+                type: string
+              received:
+                type: string
+              path:
+                type: array
+                items:
+                  type: string
+              message:
+                type: string
+        name:
+          type: string
+    error:
+      type: object
+      properties:
+        message:
+          type: string
