@@ -16,6 +16,9 @@
     2. **functions.sql**
     3. **insert.sql**
 
+    It's important to run all the above scripts, as the assessment requirements do not require any creation endpoints, and so data insertion with the script is important.
+    
+    
     If you need to delete the tables you can also run the **drop.sql** script.
 
 5. Install [NodeJs](https://nodejs.org/en/).
