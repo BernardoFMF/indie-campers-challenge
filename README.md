@@ -58,6 +58,6 @@ GET | /api-docs
 
 HTTP method | Path | Params | Query | Body | Description
 --- | --- | --- | --- | --- | --- 
-GET | /api/routes | none | **start_location** - string; **end_location** - string | none | Fetches a list of routes that have the same start_location and end_location sent
+GET | /api/routes/search | none | **start_location** - string; **end_location** - string | none | Fetches a list of routes that have the same start_location and end_location sent
 GET | /api/routes/:id | **id** - integer | none | none | Fetches a specific route
 GET | / api/landmarks/geo | none | **latitude** - numeric string; **longitude** - numeric string | none | Fetches the closest landmark given the geographic point
