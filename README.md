@@ -30,14 +30,14 @@
     - If you are using yarn:
         > yarn install
 
-7. Add the following environment variable to your machine. Must follow the pattern "key"="value":
+7. Add the following environment variables to your machine:
 
-- **PORT** - represents the port in which the server will run.
+- **PORT** - represents the port in which the server will run. If you don't add this variable, by default the server will run on port 4000.
 - **INDIE_DB_CONNECTION_STRING** - represents the connection string to connect to the database. It follows the format:
 
     > postgres://\<**user**>:\<**password**>@\<**host:port**>/\<**database name**>
 
-- [OPTIONAL] **CORS_ORIGIN** - optional environment variable. Specifies the origin of the HTTP request. If you don't add this variable, by default the origin will be **localhost:3000**.
+- [OPTIONAL] **CORS_ORIGIN** - optional environment variable. Specifies the origin of the HTTP request. Add this variable if you want to make requests from a different origin. If you don't add this variable, by default the origin will be **localhost:3000**.
 
 8. To start the server use the following command on the [server](https://github.com/BernardoFMF/indie-campers-challenge/tree/main/server) directory.
 
